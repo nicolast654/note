@@ -7,25 +7,28 @@
 #include <sys/stat.h>
 #include <sys/syslimits.h>
 
-void add_note(char *note) {
-
-    // Check that the directory to store notes.txt exists, otherwise create it.
+int init_path() {
     char *home = getenv("HOME");
     if (!home) {
         perror("No home directory\n");
+        return FAILED_TO_INIT;
     }
-    char path[PATH_MAX];
-    strcpy(path, home);
-    strcat(path, STORAGE_DIR);
+    strcpy(g_storage_path, home);
+    strcat(g_storage_path, STORAGE_DIR);
 
     struct stat st = {0};
-    if (stat(path, &st) == -1) {
-        mkdir(path, 0700);
+    if (stat(g_storage_path, &st) == -1) {
+        if (mkdir(g_storage_path, 0700) != SUCCESS) {
+            perror("Failed to create directory\n");
+            return FAILED_TO_INIT;
+        }
     }
-    strcat(path, STORAGE_NAME);
+    strcat(g_storage_path, STORAGE_NAME);
+    return SUCCESS;
+}
 
-    // path is created, open the file and add
-    FILE *storage = fopen(path, "a");
+void add_note(char *note) {
+    FILE *storage = fopen(g_storage_path, "a");
     if (!storage) {
         perror("Notes storage couldn't be opened\n");
         return;
