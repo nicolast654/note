@@ -41,5 +41,17 @@ void delete_note(char *note) {
 }
 
 void list_notes() {
+    FILE *storage = fopen(g_storage_path, "r");
+    if (!storage) {
+        perror("Couldn't read storage file\n");
+        return;
+    }
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t nread;
 
+    int i = 1;
+    while ((nread = getline(&line, &len, storage)) != -1) {
+        printf("%d. %s", i++, line);
+    }
 }
