@@ -8,14 +8,13 @@
 #include <sys/syslimits.h>
 
 int init_path() {
-    // TODO: change strcat to something that handles better overflow (snprintf maybe)
     char *home = getenv("HOME");
     if (!home) {
         perror("No home directory\n");
         return FAILED_TO_INIT;
     }
     strcpy(g_storage_path, home);
-    strcat(g_storage_path, STORAGE_DIR);
+    strlcat(g_storage_path, STORAGE_DIR, PATH_MAX);
 
     struct stat st = {0};
     if (stat(g_storage_path, &st) == -1) {
@@ -24,7 +23,7 @@ int init_path() {
             return FAILED_TO_INIT;
         }
     }
-    strcat(g_storage_path, STORAGE_NAME);
+    strlcat(g_storage_path, STORAGE_NAME, PATH_MAX);
     return SUCCESS;
 }
 
@@ -55,7 +54,7 @@ void delete_note(int index) {
         if (i++ == index) {
             continue;
         }
-        strcat(buffer, line);
+        strlcat(buffer, line, MAX_BUFFER_SIZE);
     }
     fclose(storage_read);
     free(line);
