@@ -1,4 +1,6 @@
+#include <ctype.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 
@@ -7,8 +9,11 @@
 char g_storage_path[PATH_MAX] = "";
 
 int main(int argc, char **argv) {
+    if (argc < 2) {
+        fprintf(stderr, "Usage: note <command> [args]\n");
+        return 1;
+    }
     if (init_path() == FAILED_TO_INIT) {
-        printf("PATH: %s\n", g_storage_path);
         perror("Failed to locate and/or create storage");
         return 1;
     }
@@ -16,10 +21,18 @@ int main(int argc, char **argv) {
         add_note(argv[2]);
     }
     else if (!strcmp(argv[1], "delete")) {
-        delete_note(argv[2]);
+        if (!isdigit(*(argv[2]))) {
+            fprintf(stderr,"Usage: note delete <line number>\n");
+            return 1;
+        }
+        delete_note(atoi(argv[2]));
     }
     else if (!strcmp(argv[1], "list")) {
         list_notes();
+    }
+    else {
+        fprintf(stderr,"Invalid command\n");
+        return 1;
     }
     return 0;
 }
