@@ -11,3 +11,6 @@ $(BIN):
 
 clean:
 	rm -f $(BIN)
+
+install:
+	sudo cp $(BIN) /usr/local/bin/

@@ -85,3 +85,16 @@ void list_notes() {
     fclose(storage);
     free(line);
 }
+
+void print_usage() {
+    printf(
+        "Usage:\n"
+        "  note add \"your note here\"      Add a new note\n"
+        "  note list                        List all notes\n"
+        "  note delete <number>             Delete note by line number\n"
+        "  note --help                      Show this help message\n"
+        "\n"
+        "Notes are stored in ~/.local/share/note/notes.txt\n"
+    );
+}
+
