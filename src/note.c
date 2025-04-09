@@ -41,6 +41,9 @@ int main(int argc, char **argv) {
     else if (!strcmp(argv[1], "list")) {
         list_notes();
     }
+    else if (!strcmp(argv[1], "clear")) {
+        clear_notes();
+    }
     else {
         fprintf(stderr,"Invalid command\n");
         return 1;

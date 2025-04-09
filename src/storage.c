@@ -86,6 +86,15 @@ void list_notes() {
     free(line);
 }
 
+void clear_notes() {
+    FILE *storage = fopen(g_storage_path, "w");
+    if (!storage) {
+        perror("Couldn't clear storage file\n");
+        return;
+    }
+    fclose(storage);
+}
+
 void print_usage() {
     printf(
         "Usage:\n"
