@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c99 -I./src
+CFLAGS = -g -Wall -Wextra -std=gnu99 -I./src
 
 SRC = src/note.c src/storage.c
 BIN = note

@@ -1,7 +1,8 @@
 #ifndef STORAGE_H
 #define STORAGE_H
 
-#include <sys/syslimits.h>
+#include <limits.h>
+
 #define STORAGE_NAME "/notes.txt"
 #define STORAGE_DIR "/.local/share/note"
 

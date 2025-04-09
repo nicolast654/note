@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
-#include <sys/syslimits.h>
+#include <limits.h>
 
 int init_path() {
     char *home = getenv("HOME");
@@ -14,7 +14,7 @@ int init_path() {
         return FAILED_TO_INIT;
     }
     strcpy(g_storage_path, home);
-    strlcat(g_storage_path, STORAGE_DIR, PATH_MAX);
+    snprintf(g_storage_path + strlen(g_storage_path), PATH_MAX,"%s", STORAGE_DIR);
 
     struct stat st = {0};
     if (stat(g_storage_path, &st) == -1) {
@@ -23,7 +23,7 @@ int init_path() {
             return FAILED_TO_INIT;
         }
     }
-    strlcat(g_storage_path, STORAGE_NAME, PATH_MAX);
+    snprintf(g_storage_path + strlen(g_storage_path), PATH_MAX, "%s", STORAGE_NAME);
     return SUCCESS;
 }
 
@@ -47,14 +47,14 @@ void delete_note(int index) {
 
     char *line = NULL;
     size_t len = 0;
-    ssize_t nread;
+    ssize_t nread = 0;
 
     int i = 1;
     while ((nread = getline(&line, &len, storage_read)) != -1) {
         if (i++ == index) {
             continue;
         }
-        strlcat(buffer, line, MAX_BUFFER_SIZE);
+        snprintf(buffer + strlen(buffer), MAX_BUFFER_SIZE, "%s", line);
     }
     fclose(storage_read);
     free(line);
