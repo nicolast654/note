@@ -7,8 +7,6 @@
 
 #include "storage.h"
 
-char g_storage_path[PATH_MAX] = "";
-
 int main(int argc, char **argv) {
     if (argc < 2) {
         print_usage();

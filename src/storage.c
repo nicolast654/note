@@ -7,6 +7,8 @@
 #include <sys/stat.h>
 #include <limits.h>
 
+char g_storage_path[PATH_MAX] = "";
+
 int init_path() {
     char *home = getenv("HOME");
     if (!home) {
