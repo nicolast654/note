@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
         add_note(argv[2]);
     }
     else if (!strcmp(argv[1], "delete")) {
-        if (!isdigit(*(argv[2]))) {
+        if (!argv[2] || !isdigit(*(argv[2]))) {
             fprintf(stderr,"Usage: note delete <line number>\n");
             return 1;
         }
