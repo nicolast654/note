@@ -7,6 +7,18 @@
 
 #include "storage.h"
 
+void print_usage() {
+    printf(
+        "Usage:\n"
+        "  note add \"your note here\"      Add a new note\n"
+        "  note list                        List all notes\n"
+        "  note delete <number>             Delete note by line number\n"
+        "  note --help                      Show this help message\n"
+        "\n"
+        "Notes are stored in ~/.local/share/note/notes.txt\n"
+    );
+}
+
 int main(int argc, char **argv) {
     if (argc < 2) {
         print_usage();
