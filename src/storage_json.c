@@ -6,7 +6,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
-#include "cjson/cJSON.h"
+#include "cJSON/cJSON.h"
 
 char g_storage_path[PATH_MAX] = "";
 

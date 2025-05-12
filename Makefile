@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=gnu99 -I./src -I/.third_party
+CFLAGS = -Wall -Wextra -std=gnu99 -I./src -I./third_party
 
 SRC = src/note.c src/storage_json.c third_party/cJSON/cJSON.c
 BIN = note

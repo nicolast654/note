@@ -3,7 +3,7 @@
 
 #include <limits.h>
 
-#include "cjson/cJSON.h"
+#include "cJSON/cJSON.h"
 
 typedef struct {
     char *content;
