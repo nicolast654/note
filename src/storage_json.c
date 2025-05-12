@@ -1,10 +1,11 @@
 #include "storage_json.h"
 
-#include <cjson/cJSON.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+
+#include "cjson/cJSON.h"
 
 char g_storage_path[PATH_MAX] = "";
 
@@ -98,11 +99,47 @@ void add_note_json(char *note) {
 }
 
 void delete_note_json(int index) {
+    cJSON *root = read_json_file();
 
+    if (!root || !cJSON_IsArray(root)) {
+        if (root) {
+            cJSON_Delete(root);
+        }
+        fprintf(stderr, "Error when reading json file\n");
+        exit(EXIT_FAILURE);
+    }
+
+    int size = cJSON_GetArraySize(root);
+    index -= 1;
+    if (index >= size || index < 0) {
+        cJSON_Delete(root);
+        fprintf(stderr, "Error: index out of range\n");
+        exit(EXIT_FAILURE);
+    }
+
+    cJSON_DeleteItemFromArray(root, index);
+    save_json_to_file(root);
+    cJSON_Delete(root);
 }
 
 void list_notes_json() {
+    cJSON *root = read_json_file();
 
+    if (!root || !cJSON_IsArray(root)) {
+        if (root) {
+            cJSON_Delete(root);
+        }
+        root = cJSON_CreateArray();
+    }
+
+    const cJSON *element = NULL;
+    int i = 1;
+    cJSON_ArrayForEach(element, root) {
+        cJSON *object = cJSON_GetObjectItem(element, "content");
+        if (cJSON_IsString(object)) {
+            printf("%d. %s\n", i++, object->valuestring);
+        }
+    }
 }
 
 void clear_notes_json() {
