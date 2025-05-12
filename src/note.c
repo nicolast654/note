@@ -5,7 +5,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
-#include "storage.h"
+#include "storage_json.h"
 
 void print_usage() {
     printf(
@@ -32,27 +32,27 @@ int main(int argc, char **argv) {
     }
 
     // create note directory in ~/.local/share
-    if (init_path() == FAILED_TO_INIT) {
+    if (init_path_json() == FAILED_TO_INIT) {
         perror("Failed to locate and/or create storage");
         return 1;
     }
 
     // parse subcommands
     if (!strcmp(argv[1], "add")) {
-        add_note(argv[2]);
+        add_note_json(argv[2]);
     }
     else if (!strcmp(argv[1], "delete")) {
         if (!argv[2] || !isdigit(*(argv[2]))) {
             fprintf(stderr,"Usage: note delete <line number>\n");
             return 1;
         }
-        delete_note(atoi(argv[2]));
+        delete_note_json(atoi(argv[2]));
     }
     else if (!strcmp(argv[1], "list")) {
-        list_notes();
+        list_notes_json();
     }
     else if (!strcmp(argv[1], "clear")) {
-        clear_notes();
+        clear_notes_json();
     }
     else {
         fprintf(stderr,"Invalid command\n");

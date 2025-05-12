@@ -51,3 +51,9 @@ This will copy the compiled binary to `/usr/local/bin/note`, making it accessibl
 ## License
 
 [MIT](https://github.com/nicolast654/note/blob/main/LICENSE)
+
+## Third-Party Libraries
+
+This project includes the [cJSON](https://github.com/DaveGamble/cJSON) library by Dave Gamble, a lightweight JSON parser in C, distributed under the MIT License.
+
+The source code is located in `third_party/cJSON/`, and the original license has been preserved in `third_party/cJSON/LICENSE`.
