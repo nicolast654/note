@@ -1,5 +1,6 @@
 #include "storage_json.h"
 
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -143,5 +144,20 @@ void list_notes_json() {
 }
 
 void clear_notes_json() {
+    char user_answer;
+    char ch;
+    do {
+        printf("Are you sure you want to clear all your notes? [y/n]\n");
+        scanf(" %c", &user_answer);
+        user_answer = isupper(user_answer) ? tolower(user_answer) : user_answer;
 
+        while ((ch = getchar()) != '\n' && ch != EOF);
+    } while (user_answer != 'y' && user_answer != 'n');
+
+    if (user_answer == 'n') {
+        return;
+    }
+
+    cJSON *root = cJSON_CreateArray();
+    save_json_to_file(root);
 }
