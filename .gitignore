@@ -1,3 +1,4 @@
 note
 test_note
 *.o
+.clangd
