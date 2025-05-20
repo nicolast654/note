@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
     }
     else if (!strcmp(argv[1], "delete")) {
         if (!argv[2] || !isdigit(*(argv[2]))) {
-            fprintf(stderr,"Usage: note delete <line number>\n");
+            fprintf(stderr,"Usage: note delete <note index>\n");
             return 1;
         }
         delete_note_json(atoi(argv[2]));
@@ -53,6 +53,13 @@ int main(int argc, char **argv) {
     }
     else if (!strcmp(argv[1], "clear")) {
         clear_notes_json();
+    }
+    else if (!strcmp(argv[1], "edit")) {
+        if (!argv[2] || isdigit(*(argv[2]))) {
+            fprintf(stderr, "Usage: note edit <note index>\n");
+            return 1;
+        }
+        edit_note_json(atoi(argv[2]));
     }
     else {
         fprintf(stderr,"Invalid command\n");

@@ -143,6 +143,10 @@ void list_notes_json() {
     }
 }
 
+void edit_note_json(int index) {
+
+}
+
 void clear_notes_json() {
     char user_answer;
     char ch;
