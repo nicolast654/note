@@ -4,9 +4,12 @@
 A minimal and fast command-line scratchpad for quick note-taking, written in C.
 
 ## Features
-- Add, list, and delete notes from your terminal
-- Notes saved to `~/.local/share/note/notes.json`
-- Built from scratch with no dependencies
+- Add notes
+- List notes
+- Delete notes
+- Edit notes
+- Plaintext storage at `~/.local/share/note/notes.txt`
+- No external packages to install, cJSON is included and built automatically
 
 ## Usage
 
