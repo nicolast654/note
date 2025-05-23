@@ -36,7 +36,7 @@ This will copy the compiled binary to `/usr/local/bin/note`, making it accessibl
 - [x] List notes
 - [x] Delete notes
 - [x] Clear all notes
-- [ ] Edit a note
+- [x] Edit a note
 - [ ] Search notes
 - [ ] Timestamps
 

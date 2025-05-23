@@ -55,11 +55,11 @@ int main(int argc, char **argv) {
         clear_notes_json();
     }
     else if (!strcmp(argv[1], "edit")) {
-        if (!argv[2] || isdigit(*(argv[2]))) {
-            fprintf(stderr, "Usage: note edit <note index>\n");
+        if (!argv[2] || !isdigit(*(argv[2])) || !argv[3]) {
+            fprintf(stderr, "Usage: note edit <note index> <new_note>\n");
             return 1;
         }
-        edit_note_json(atoi(argv[2]));
+        edit_note_json(atoi(argv[2]), argv[3]);
     }
     else {
         fprintf(stderr,"Invalid command\n");

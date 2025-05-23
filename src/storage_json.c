@@ -143,8 +143,25 @@ void list_notes_json() {
     }
 }
 
-void edit_note_json(int index) {
+void edit_note_json(int index, char *new_note) {
+    index -= 1; // pass from 1-indexed to 0-indexed
+    cJSON *root = read_json_file();
 
+    if (!root || !cJSON_IsArray(root)) {
+        if (root) {
+            cJSON_Delete(root);
+        }
+        fprintf(stderr, "Error when reading json file\n");
+        exit(EXIT_FAILURE);
+    }
+
+    cJSON_DeleteItemFromArray(root, index);
+
+    cJSON *note_obj = cJSON_CreateObject();
+    cJSON_AddStringToObject(note_obj, "content", new_note);
+    cJSON_InsertItemInArray(root, index, note_obj);
+    save_json_to_file(root);
+    cJSON_Delete(root);
 }
 
 void clear_notes_json() {
