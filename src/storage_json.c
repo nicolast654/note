@@ -93,6 +93,8 @@ void add_note_json(char *note) {
     }
 
     cJSON *note_obj = cJSON_CreateObject();
+    char *timestamp = get_date_as_string();
+    cJSON_AddStringToObject(note_obj, "date", timestamp);
     cJSON_AddStringToObject(note_obj, "content", note);
     cJSON_AddItemToArray(root, note_obj);
     save_json_to_file(root);
