@@ -26,11 +26,11 @@ make      # Builds the default release version
 make debug  # Builds with -g debug flags
 ```
 
-## Install
+## Install (need root access)
 
 ```bash
 make
-sudo make install
+make install
 ```
 This will copy the compiled binary to `/usr/local/bin/note`, making it accessible from anywhere in your terminal.
 
@@ -41,7 +41,7 @@ This will copy the compiled binary to `/usr/local/bin/note`, making it accessibl
 - [x] Clear all notes
 - [x] Edit a note
 - [ ] Search notes
-- [ ] Timestamps
+- [x] Timestamps
 
 ## Nice to Have
 - Optional encryption

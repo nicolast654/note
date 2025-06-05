@@ -7,6 +7,7 @@
 #include <sys/stat.h>
 
 #include "cJSON/cJSON.h"
+#include "utils.h"
 
 char g_storage_path[PATH_MAX] = "";
 
@@ -93,10 +94,13 @@ void add_note_json(char *note) {
     }
 
     cJSON *note_obj = cJSON_CreateObject();
+    char *timestamp = get_date_as_string();
+    cJSON_AddStringToObject(note_obj, "date", timestamp);
     cJSON_AddStringToObject(note_obj, "content", note);
     cJSON_AddItemToArray(root, note_obj);
     save_json_to_file(root);
     cJSON_Delete(root);
+    free(timestamp);
 }
 
 void delete_note_json(int index) {
@@ -123,7 +127,7 @@ void delete_note_json(int index) {
     cJSON_Delete(root);
 }
 
-void list_notes_json() {
+void list_notes_json(int show_time) {
     cJSON *root = read_json_file();
 
     if (!root || !cJSON_IsArray(root)) {
@@ -136,9 +140,16 @@ void list_notes_json() {
     const cJSON *element = NULL;
     int i = 1;
     cJSON_ArrayForEach(element, root) {
-        cJSON *object = cJSON_GetObjectItem(element, "content");
-        if (cJSON_IsString(object)) {
-            printf("%d. %s\n", i++, object->valuestring);
+        cJSON *content = cJSON_GetObjectItem(element, "content");
+        cJSON *date = cJSON_GetObjectItem(element, "date");
+        const char *time_string = (show_time && cJSON_IsString(date)) ? date->valuestring : "???";
+        if (cJSON_IsString(content)) {
+            if (show_time && cJSON_IsString(date)) {
+                printf("%d. [%s] %s\n", i++, time_string, content->valuestring);
+            }
+            else {
+                printf("%d. %s\n", i++, content->valuestring);
+            }
         }
     }
 }
@@ -158,6 +169,8 @@ void edit_note_json(int index, char *new_note) {
     cJSON_DeleteItemFromArray(root, index);
 
     cJSON *note_obj = cJSON_CreateObject();
+    char *timestamp = get_date_as_string();
+    cJSON_AddStringToObject(note_obj, "date", timestamp);
     cJSON_AddStringToObject(note_obj, "content", new_note);
     cJSON_InsertItemInArray(root, index, note_obj);
     save_json_to_file(root);
