@@ -7,6 +7,7 @@
 #include <sys/stat.h>
 
 #include "cJSON/cJSON.h"
+#include "utils.h"
 
 char g_storage_path[PATH_MAX] = "";
 
@@ -99,6 +100,7 @@ void add_note_json(char *note) {
     cJSON_AddItemToArray(root, note_obj);
     save_json_to_file(root);
     cJSON_Delete(root);
+    free(timestamp);
 }
 
 void delete_note_json(int index) {
@@ -160,6 +162,8 @@ void edit_note_json(int index, char *new_note) {
     cJSON_DeleteItemFromArray(root, index);
 
     cJSON *note_obj = cJSON_CreateObject();
+    char *timestamp = get_date_as_string();
+    cJSON_AddStringToObject(note_obj, "date", timestamp);
     cJSON_AddStringToObject(note_obj, "content", new_note);
     cJSON_InsertItemInArray(root, index, note_obj);
     save_json_to_file(root);

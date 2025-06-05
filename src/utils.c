@@ -7,7 +7,10 @@
 
 char *my_strdup(const char *str) {
     char *new = malloc(strlen(str) + 1);
-    assert(new);
+    if (!new) {
+        fprintf(stderr, "Couldn't allocate memory\n");
+        exit(EXIT_FAILURE);
+    }
     strcpy(new, str);
     return new;
 }
@@ -23,5 +26,11 @@ char *get_date_as_string() {
         fprintf(stderr, "ctime failed.\n");
         exit(EXIT_FAILURE);
     }
+
+    size_t len = strlen(raw);
+    if (len > 0 && raw[len - 1] == '\n') {
+        raw[len - 1] = '\0';
+    }
+
     return my_strdup(raw);
 }

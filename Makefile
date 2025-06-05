@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=gnu99 -I./src -I./third_party
 
-SRC = src/note.c src/storage_json.c third_party/cJSON/cJSON.c
+SRC = src/note.c src/storage_json.c third_party/cJSON/cJSON.c src/utils.c
 BIN = note
 
 TEST_SRC = tests/test_note.c src/storage.c third_party/cJSON/cJSON.c
