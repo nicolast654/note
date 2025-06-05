@@ -9,13 +9,16 @@
 
 void print_usage() {
     printf(
-        "Usage:\n"
-        "  note add \"your note here\"      Add a new note\n"
-        "  note list                        List all notes\n"
-        "  note delete <number>             Delete note by line number\n"
-        "  note --help                      Show this help message\n"
-        "\n"
-        "Notes are stored in ~/.local/share/note/notes.txt\n"
+            "Usage:\n"
+    "  note add \"your note here\"         Add a new note\n"
+    "  note list [options]               List all notes\n"
+    "      -t, --time                    Show timestamps\n"
+    "  note delete <number>              Delete note by line number\n"
+    "  note edit <number> \"new note\"     Edit note by line number\n"
+    "  note clear                        Delete all notes (with prompt)\n"
+    "  note --help                       Show this help message\n"
+    "\n"
+    "Notes are stored in ~/.local/share/note/notes.json\n"
     );
 }
 
@@ -49,7 +52,16 @@ int main(int argc, char **argv) {
         delete_note_json(atoi(argv[2]));
     }
     else if (!strcmp(argv[1], "list")) {
-        list_notes_json();
+        int show_time = 0;
+        for (int i = 2; i < argc; ++i) {
+            if (strcmp(argv[i], "-t") == 0 || strcmp(argv[i], "--time") == 0) {
+                show_time = 1;
+            } else {
+                fprintf(stderr, "Unknown option: %s\n", argv[i]);
+                return 1;
+            }
+        }
+        list_notes_json(show_time);
     }
     else if (!strcmp(argv[1], "clear")) {
         clear_notes_json();
