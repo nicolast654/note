@@ -1,5 +1,7 @@
 {
     "files.associations": {
         "variant": "c"
-    }
+    },
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true
 }
